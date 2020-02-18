@@ -1,0 +1,17 @@
+name: Toggl automations
+
+on: 
+	repository_dispatch:
+		types:
+			- toggl-start-timer
+			- toggl-stop-timer
+			- toggl-subtract-lunch
+
+jobs:
+	build:
+		runs-on: ubuntu-latest
+		steps:
+		- uses: actions/checkout@v1
+		- name: dispatch trigger
+			run: |
+				echo "repository_dispatch triggered"
