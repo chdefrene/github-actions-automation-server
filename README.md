@@ -10,6 +10,8 @@ Various automations running hosted on github actions
 
 Send a POST request to `https://api.github.com/repos/:owner/:repo/dispatches`
 
+This will only trigger a workflow present on the *default* branch. Specifying a custom branch is not supported.
+
 Remember to authenticate by adding this to the HTTP header:
 ```
 Authorization: Bearer {{GITHUB_TOKEN}}
