@@ -1,17 +1,22 @@
-name: Toggl automations
+name: "Toggl automations"
 
-on: 
-	repository_dispatch:
-		types:
-			- toggl-start-timer
-			- toggl-stop-timer
-			- toggl-subtract-lunch
+on:
+  push:
+  repository_dispatch:
+    types: [toggl]
 
 jobs:
-	build:
-		runs-on: ubuntu-latest
-		steps:
-		- uses: actions/checkout@v1
-		- name: dispatch trigger
-			run: |
-				echo "repository_dispatch triggered"
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          node-version: 12.x
+      - run: npm ci
+      - name: Do stuff
+        env:
+          TOGGL_API_TOKEN: ${{ secrets.TOGGL_API_TOKEN }}
+          TOGGL_PROJECT_ID: ${{ secrets.TOGGL_PROJECT_ID }}
+          TOGGL_WORKSPACE_ID: ${{ secrets.TOGGL_WORKSPACE_ID }}
+        run: |
+          node toggl-get-current-timer.js
