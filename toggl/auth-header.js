@@ -6,7 +6,9 @@
  Source: https://github.com/toggl/toggl_api_docs/blob/master/chapters/authentication.md#authentication
  */
 
-const auth_credentials = `${process.env.TOGGL_API_TOKEN}:api_token`;
+const core = require("@actions/core");
+
+const auth_credentials = `${core.getInput('toggl_api_token')}:api_token`;
 const base64_credentials = Buffer.from(auth_credentials).toString('base64');
 
 module.exports = {
