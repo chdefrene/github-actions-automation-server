@@ -19,4 +19,4 @@ jobs:
           TOGGL_PROJECT_ID: ${{ secrets.TOGGL_PROJECT_ID }}
           TOGGL_WORKSPACE_ID: ${{ secrets.TOGGL_WORKSPACE_ID }}
         run: |
-          node toggl-get-current-timer.js
+          node toggl/toggl-get-current-timer.js
