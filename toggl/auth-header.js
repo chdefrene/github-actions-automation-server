@@ -14,5 +14,3 @@ const base64_credentials = Buffer.from(auth_credentials).toString('base64');
 module.exports = {
     'Authorization': `Basic ${base64_credentials}`
 };
-
-

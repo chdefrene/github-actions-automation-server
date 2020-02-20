@@ -18,12 +18,4 @@ async function getRunningTimeEntry() {
     return await response.json();
 }
 
-getRunningTimeEntry()
-    .then(json => {
-        // core.debug(json);
-        console.log(json);
-    })
-    .catch(error => {
-        // core.setFailed(error.message);
-        console.log(error.message);
-    });
+module.exports.getRunningTimeEntry = getRunningTimeEntry;

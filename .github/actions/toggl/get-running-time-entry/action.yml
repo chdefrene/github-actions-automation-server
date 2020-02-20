@@ -1,3 +1,4 @@
+# Deprecated action.
 name: 'Get running time entry'
 description: 'Retrieves the currently running timer. If no timer is running, return `null`.'
 inputs:

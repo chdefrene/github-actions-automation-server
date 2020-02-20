@@ -5,8 +5,8 @@ Various automations running hosted on github actions
 
 | Event type                | Description                                                                            |
 | ------------------------- | -------------------------------------------------------------------------------------- |
-| `get-running-time-entry`  | Returns the id of the currently running Toggl timer, or `null` if no timer is running. |
 | `start-a-time-entry`      | Starts a timer running on toggl.com.                                                   |
+| `stop-a-time-entry`       | First gets the id of the currently running timer on toggl.com. Then stops that timer.  |
 
 
 ### How to trigger the `repository_dispatch` event

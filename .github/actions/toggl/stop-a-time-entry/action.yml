@@ -1,0 +1,9 @@
+name: 'Stop a time entry'
+description: 'Stops the currently running timer on toggl.com.'
+inputs:
+  toggl_api_token:
+    description: 'API token provided by Toggl'
+    required: true
+runs:
+  using: 'node12'
+  main: '../../../../toggl/stop-a-time-entry.js'
