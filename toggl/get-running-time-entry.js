@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 
+
 const authHeader = require('./auth-header');
 
 /*
@@ -8,7 +9,7 @@ const authHeader = require('./auth-header');
  API documentation:
  https://github.com/toggl/toggl_api_docs/blob/master/chapters/time_entries.md#get-running-time-entry
  */
-async function getCurrentTimeEntry() {
+async function getRunningTimeEntry() {
     const url = 'https://www.toggl.com/api/v8/time_entries/current';
 
     const response = await fetch(url, {
@@ -19,7 +20,7 @@ async function getCurrentTimeEntry() {
     return await response.json();
 }
 
-getCurrentTimeEntry()
+getRunningTimeEntry()
     .then(json => {
         // core.debug(json);
         console.log(json);

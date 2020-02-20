@@ -1,6 +1,12 @@
 # github-actions-automation-server
 Various automations running hosted on github actions
 
+## Supported dispatch actions
+
+| Event type                | Description                                                                            |
+| ------------------------- | -------------------------------------------------------------------------------------- |
+| `get-running-time-entry`  | Returns the id of the currently running Toggl timer, or `null` if no timer is running. |
+
 
 ### How to trigger the `repository_dispatch` event
 

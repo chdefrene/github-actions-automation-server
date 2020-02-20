@@ -1,0 +1,12 @@
+name: 'Get running time entry'
+description: 'Retrieves the currently running timer. If no timer is running, return `null`'
+inputs:
+  toggl_api_token:
+    description: 'API token provided by Toggl'
+    required: true
+outputs:
+  id:
+    description: 'Time entry id'
+runs:
+  using: 'node12'
+  main: '../../../../toggl/get-running-time-entry.js'

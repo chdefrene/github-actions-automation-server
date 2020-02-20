@@ -1,22 +1,33 @@
-name: "Toggl automations"
-
+name: 'Get running time entry'
 on:
-  push:
+  push: # Remove
+    branches: # Remove
+      - toggl # Remove
   repository_dispatch:
-    types: [toggl]
+    types: [get-running-time-entry]
 
 jobs:
-  build:
+  automation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-        with:
-          node-version: 12.x
-      - run: npm ci
-      - name: Do stuff
+      - uses: actions/checkout@v2
+
+      - name: Cache node modules
+        uses: actions/cache@v1
         env:
-          TOGGL_API_TOKEN: ${{ secrets.TOGGL_API_TOKEN }}
-          TOGGL_PROJECT_ID: ${{ secrets.TOGGL_PROJECT_ID }}
-          TOGGL_WORKSPACE_ID: ${{ secrets.TOGGL_WORKSPACE_ID }}
-        run: |
-          node toggl/toggl-get-current-timer.js
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install Dependencies
+        run: npm install
+
+      - uses: ./.github/actions/toggl/get-running-time-entry
+        if: github.event.action == 'get-running-time-entry' || github.event_name == 'push'
+        with:
+          toggl_api_token: ${{ secrets.TOGGL_API_TOKEN }}
