@@ -1,4 +1,4 @@
-name: 'Get running time entry'
+name: 'Toggl'
 on:
   repository_dispatch:
     types:
@@ -23,8 +23,8 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Install Dependencies
-        run: npm install
+      # - name: Install Dependencies
+      #   run: npm install
 
       - uses: ./.github/actions/toggl/start-a-time-entry
         if: github.event.action == 'start-a-time-entry'

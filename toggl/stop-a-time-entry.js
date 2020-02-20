@@ -22,8 +22,10 @@ async function stopATimeEntry(timeEntryId) {
 
 getRunningTimeEntry()
     .then(json => {
-        const timeEntryId = json.data.id;
-        return stopATimeEntry(timeEntryId);
+        if (json.data) {
+            const timeEntryId = json.data.id;
+            return stopATimeEntry(timeEntryId);
+        }
     })
     .then(json => {
         console.log(json);
