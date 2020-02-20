@@ -1,6 +1,4 @@
 const fetch = require('node-fetch');
-
-
 const authHeader = require('./auth-header');
 
 /*

@@ -1,0 +1,15 @@
+name: 'Start a time entry'
+description: 'Starts the timer on toggl.com for the specified workspace and project.'
+inputs:
+  toggl_api_token:
+    description: 'API token provided by Toggl'
+    required: true
+  toggl_workspace_id:
+    description: 'Toggl workspace id'
+    required: true
+  toggl_project_id:
+    description: 'Toggl project id'
+    required: true
+runs:
+  using: 'node12'
+  main: '../../../../toggl/start-a-time-entry.js'

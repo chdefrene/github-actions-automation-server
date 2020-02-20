@@ -1,10 +1,9 @@
 name: 'Get running time entry'
 on:
-  push: # Remove
-    branches: # Remove
-      - toggl # Remove
   repository_dispatch:
-    types: [get-running-time-entry]
+    types:
+      - get-running-time-entry
+      - start-a-time-entry
 
 jobs:
   automation:
@@ -28,6 +27,13 @@ jobs:
         run: npm install
 
       - uses: ./.github/actions/toggl/get-running-time-entry
-        if: github.event.action == 'get-running-time-entry' || github.event_name == 'push'
+        if: github.event.action == 'get-running-time-entry'
         with:
           toggl_api_token: ${{ secrets.TOGGL_API_TOKEN }}
+
+      - uses: ./.github/actions/toggl/start-a-time-entry
+        if: github.event.action == 'start-a-time-entry'
+        with:
+          toggl_api_token: ${{ secrets.TOGGL_API_TOKEN }}
+          toggl_workspace_id: ${{ secrets.TOGGL_WORKSPACE_ID }}
+          toggl_project_id: ${{ secrets.TOGGL_PROJECT_ID }}

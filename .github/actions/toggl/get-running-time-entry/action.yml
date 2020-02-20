@@ -1,5 +1,5 @@
 name: 'Get running time entry'
-description: 'Retrieves the currently running timer. If no timer is running, return `null`'
+description: 'Retrieves the currently running timer. If no timer is running, return `null`.'
 inputs:
   toggl_api_token:
     description: 'API token provided by Toggl'
