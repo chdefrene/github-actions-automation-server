@@ -3,11 +3,18 @@ Various automations running hosted on github actions
 
 ## Supported dispatch actions
 
+#### Toggl
+
 | Event type                | Description                                                                            |
 | ------------------------- | -------------------------------------------------------------------------------------- |
 | `start-a-time-entry`      | Starts a timer running on toggl.com.                                                   |
 | `stop-a-time-entry`       | First gets the id of the currently running timer on toggl.com. Then stops that timer.  |
 
+#### Spotify
+
+| Event type                | Description                                                                            |
+| ------------------------- | -------------------------------------------------------------------------------------- |
+| `transfer-playback`       | Start playback on the selected Spotify Connect device.                                 |
 
 ### How to trigger the `repository_dispatch` event
 
