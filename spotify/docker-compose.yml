@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  server:
+    image: chdefrene/spotify-server
+    container_name: spotify-server
+    restart: unless-stopped
+    environment:
+      CLIENT_ID:
+      CLIENT_SECRET:
+      REFRESH_TOKEN:
+      DEVICE_ID:
+    ports:
+      - 1337:80

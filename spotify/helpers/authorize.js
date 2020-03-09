@@ -15,15 +15,8 @@
 
 const {URL, URLSearchParams} = require('url');
 const crypto = require("crypto");
-const readline = require('readline');
 const fetch = require('node-fetch');
-
-/* ====================================================== /
-    Set client credentials here locally. DO NOT UPLOAD!
-/ ====================================================== */
-const clientId = '';
-const clientSecret = '';
-/* ===================================================== */
+require('./secrets');
 
 // Request data
 const redirect_uri = 'https://spotify.com';
@@ -32,14 +25,6 @@ const scope = [
     'user-read-playback-state',
     'user-modify-playback-state'
 ].join(',');
-
-// Response data
-let code;
-
-const prompt = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
 
 
 /**
@@ -50,7 +35,7 @@ const prompt = readline.createInterface({
 async function requestAuthorization() {
     const url = new URL('https://accounts.spotify.com/authorize');
     const queryParams = {
-        client_id: clientId,
+        client_id: process.env.CLIENT_ID,
         response_type: 'code',
         redirect_uri: redirect_uri,
         state: state,
@@ -71,8 +56,8 @@ async function requestAuthorization() {
 async function obtainRefreshToken(code) {
     const url = 'https://accounts.spotify.com/api/token';
     const data = {
-        client_id: clientId,
-        client_secret: clientSecret,
+        client_id: process.env.CLIENT_ID,
+        client_secret: process.env.CLIENT_SECRET,
         grant_type: 'authorization_code',
         code: code,
         redirect_uri: redirect_uri
@@ -91,34 +76,36 @@ async function obtainRefreshToken(code) {
     return json['refresh_token'];
 }
 
+/**
+ * Request an access token with a previously obtained refresh token.
+ *
+ * @returns The access token
+ */
+async function obtainAccessToken() {
+    const url = 'https://accounts.spotify.com/api/token';
+    const data = {
+        client_id: process.env.CLIENT_ID,
+        client_secret: process.env.CLIENT_SECRET,
+        grant_type: 'refresh_token',
+        refresh_token: process.env.REFRESH_TOKEN,
+        redirect_uri: 'https://spotify.com'
+    };
 
-requestAuthorization()
-    .then(url => {
-        console.log(
-            "Authorization token requested successfully!" +
-            "\n\nNext steps:" +
-            "\nOpen the below URL. You may need to log in with your Spotify account." +
-            "\nOnce completed, copy the current URl (ctrl+L + ctrl+C), then paste it into the prompt.\n");
-        console.log(url);
-        console.log("");
-    })
-    .then(() => {
-        prompt.question('Paste URL here:\n>>> ', (url) => {
-            code = new URL(url).searchParams.get('code');
-            prompt.close();
-        });
-    })
-    .catch(error => console.log(error));
+    const response = await fetch(url, {
+        method: 'POST',
+        body: new URLSearchParams(data),
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    });
 
-prompt.on('close', () => {
-    obtainRefreshToken(code)
-        .then(refreshToken => {
-            console.log("");
-            console.log(
-                `Et voilà! Your new refresh token is:\n` +
-                `${refreshToken}\n\n` +
-                `Now, copy the token and save it as a secret called SPOTIFY_REFRESH_TOKEN in the Github repo.`
-            )
-        })
-        .catch(error => console.log(error));
-});
+    const json = await response.json();
+
+    return json['access_token'];
+}
+
+module.exports = {
+    requestAuthorization,
+    obtainRefreshToken,
+    obtainAccessToken
+};
