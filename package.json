@@ -2,7 +2,7 @@
   "name": "github-actions-automation-server",
   "version": "1.0.0",
   "dependencies": {
-    "@actions/core": "^1.2.4",
+    "@actions/core": "^1.9.1",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {}
